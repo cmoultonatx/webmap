@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="src/leaflet.css">
+		<script src="src/leaflet-src.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+		<script src="src/jquery-3.3.1.min.js"></script>
+		<link rel="stylesheet" href="src/plugins/L.Control.Pan.css">
+		<script src="src/plugins/L.Control.Pan.js"></script>
+		<meta charset="UTF-8">
+		<title>Webmap 201</title>
+		<style>
+		</style>
+	</head>
+	<body>
+		<div id="mapdiv" style="height:850px;"></div>
+		<script>
+			var map = L.map('mapdiv', {
+					center:[30.3, -97.75],
+					zoom:13,
+					zoomControl:false,
+					attributionControl:false
+				});
+				lyrOSM = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
+			map.addLayer(lyrOSM);
+
+			L.control.pan().addTo(map);
+			L.control.zoom().addTo(map);
+		</script>
+	</body>
+</html>
