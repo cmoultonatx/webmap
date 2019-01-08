@@ -9,12 +9,13 @@
 		<link rel="stylesheet" href="src/plugins/L.Control.Zoomslider.css">
 		<link rel="stylesheet" href="src/plugins/L.Control.MousePosition.css">
 		<link rel="stylesheet" href="src/plugins/L.Control.Sidebar.css">
-
+		<link rel="stylesheet" href="src/plugins/Control.OSMGeocoder.css">
 		<link rel="stylesheet" href="src/plugins/easy-button.css">
 		<link rel="stylesheet" href="src/plugins/Leaflet.PolylineMeasure.css">
 		<script src="src/plugins/L.Control.Pan.js"></script>
 		<script src="src/plugins/L.Control.Zoomslider.js"></script>
 		<script src="src/plugins/L.Control.Sidebar.js"></script>
+		<script src="src/plugins/Control.OSMGeocoder.js"></script>
 		<script src="src/plugins/easy-button.js"></script>
 
 		<script src="src/plugins/L.Control.MousePosition.js"></script>
@@ -40,10 +41,7 @@
 	</head>
 	<body>
 		<div id='header' class='col-md-12'>
-			<h1 class='text-center'>My Map</h1>
-		</div>
-		<div id='leaflet-sidebar'>
-			<h1>Leaflet Sidebar</h1>
+			<h1 class='text-center'>Chris Moulton's Web Map!</h1>
 		</div>
 		<div id="side-bar" class="col-md-3">
 			<button id='locate' class='btn btn-primary btn-block'>Locate Me</button>
@@ -65,6 +63,8 @@
 			var polylineMeasure;
 			var easyButton;
 			var ctlSidebar;
+			var ctlOSMGeocoder;
+			var nzLayer;
 
 
 			$(document).ready(function(){
@@ -75,7 +75,7 @@
 					attributionControl:false,
 					zoomsliderControl: true
 				});
-				lyrOSM = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
+				lyrOSM = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png');
 				mymap.addLayer(lyrOSM);
 
 				ctlPan = L.control.pan().addTo(mymap);
@@ -90,6 +90,10 @@
 				easyButton = L.easyButton('glyphicon-transfer',function(){
 					ctlSidebar.toggle();
 				}).addTo(mymap);
+
+				ctlOSMGeocoder = new L.Control.OSMGeocoder();
+
+				mymap.addControl(ctlOSMGeocoder);
 
 
 				//ctlZoom = L.control.zoom(
@@ -108,6 +112,7 @@
 					maxWidth: 200,
 					metric: false
 				}).addTo(mymap);
+
 				//setInterval(function(){
 				//	mymap.locate();
 				//}, 5000);
@@ -128,12 +133,15 @@
 					L.marker(e.latlng).addTo(mymap).bindPopup(e.latlng.toString()+"<br>"+dtCurrentTime.toString());
 				});
 
-				mymap.on('keypress',function(e){
-					console.log(e);
-					if (e.originalEvent.key=="l"){
-						mymap.locate();
-					}
-				});
+				//mymap.on('keypress',function(e){
+				//	console.log(e);
+				//	if (e.originalEvent.key=="l"){
+				//		mymap.locate();
+				//	}
+				//});
+
+
+
 
 				mymap.on('locationfound',function(e){
 					console.log(e);
